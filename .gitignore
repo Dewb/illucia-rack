@@ -1,0 +1,9 @@
+/build
+plugin.dylib
+plugin.dll
+plugin.so
+.DS_Store
+/dist
+.vscode/ipch
+/Rack-SDK
+Rack-SDK*.zip

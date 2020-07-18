@@ -1,0 +1,24 @@
+{
+  "slug": "illucia-dtr",
+  "name": "illucia-dtr",
+  "version": "1.0.0-pre",
+  "license": "GPL-2.0",
+  "author": "",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "https://github.com/Dewb/illucia-rack",
+  "donateUrl": "",
+  "modules": [
+    {
+      "slug": "illucia-dtr",
+      "name": "illucia dtr",
+      "description": "hardware patchbay controller",
+      "tags": [
+        "controller",
+        "external"
+      ]
+    }
+  ]
+}
