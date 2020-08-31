@@ -64,14 +64,60 @@ IlluciaDtrWidget::IlluciaDtrWidget(IlluciaDtr* module)
     addOutput(createOutputCentered<PJ301MPort>(mm2px(Vec(75.292, 115.638)), module, IlluciaDtr::KNOB6_OUTPUT));
 
     addChild(createLightCentered<MediumLight<RedLight>>(mm2px(Vec(199.751, 115.861)), module, IlluciaDtr::CONNECTION_LIGHT));
-
 }
+
+struct SelectSerialPortItem : MenuItem
+{
+    IlluciaDtr* module;
+    std::string port;
+    void onAction(const event::Action& e) override
+    {
+        if (module)
+        {
+            if (module->serial.getActivePort() == port)
+            {
+                module->serial.disconnect();
+            }
+            else
+            {
+                module->serial.connect(port);
+            }
+        }
+    }
+
+    void step() override
+    {
+        rightText = CHECKMARK(module->serial.getActivePort() == port);
+    }
+};
 
 void IlluciaDtrWidget::appendContextMenu(Menu* menu)
 {
     IlluciaDtr* mod = dynamic_cast<IlluciaDtr*>(module);
-    if (mod) {
+    if (mod)
+    {
         menu->addChild(construct<MenuLabel>());
-        menu->addChild(construct<MenuLabel>(&MenuLabel::text, "Not connected"));
+        menu->addChild(construct<MenuLabel>(&MenuLabel::text, "Serial devices detected:"));
+
+        auto ports = mod->serial.listSerialPorts();
+        if (ports.size() == 0)
+        {
+            menu->addChild(construct<MenuLabel>(&MenuLabel::text, "(no devices detected)"));
+            return;
+        }
+
+        for (auto& port : ports)
+        {
+            std::string desc = port.description;
+            if (desc.length() > 24)
+            {
+                desc = desc.substr(0, 11) + "..." + desc.substr(desc.length() - 10, 10);
+            }
+            auto item = new SelectSerialPortItem();
+            item->text = desc;
+            item->port = port.port;
+            item->module = mod;
+            menu->addChild(item);
+        }
     }
 }

@@ -15,17 +15,15 @@ void IlluciaDtr::process(const ProcessArgs& args)
     {
     }
 
-    for (auto& input : inputs) 
+    for (auto& input : inputs)
     {
-
     }
 
-    for (auto& output: outputs)
+    for (auto& output : outputs)
     {
-
     }
 
-    for (auto& light: lights)
+    for (auto& light : lights)
     {
         light.setBrightness(255);
     }
@@ -42,4 +40,3 @@ void IlluciaDtr::dataFromJson(json_t* rootJ)
 {
     mode = json_number_value(json_object_get(rootJ, "mode"));
 }
-
